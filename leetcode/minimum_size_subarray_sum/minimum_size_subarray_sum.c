@@ -1,25 +1,26 @@
 int minSubArrayLen(int target, int* nums, int numsSize) {
     int min_len = INT_MAX;
+    int left = 0, right = 0, sum = 0;
 
-    for (int i = 0; i < numsSize; i++) {
-        int sum = nums[i];
-        int count = 0;
-        count++;
+    for (; right < numsSize; right++) {
+        // Increment until the target condition is met
+        sum += nums[right];
 
-        // Check if len == 1 is a possible solution
-        if (sum >= target && count < min_len) {
-            return count;
-        }
+        // Oh, wait, STOP!!!
+        // We need to check if the len of this iteration is the min
+        // how do we check the len of the current iteration
+        // That's why we keep track of the left and right!
+        while (sum >= target) {
+            int current_len = right-left +1;
 
-        // Sliding window to aggregate
-        for (int j = i+1; j < numsSize; j++) {
-            sum += nums[j];
-            count++;
-            // printf("i: %d, j: %d, sum: %d, count: %d\n", nums[i],nums[j], sum, count);
-
-            if (sum >= target && count < min_len) {
-                min_len = count;
+            if (min_len > current_len) {
+                min_len = current_len;
             }
+
+            sum -= nums[left];
+            
+            // Once we find the len and compare, onto to the next min window using left
+            left++;
         }
     }
 
