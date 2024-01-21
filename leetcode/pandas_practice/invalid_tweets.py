@@ -5,6 +5,4 @@ import pandas as pd
 # Return the result table in any order.
 
 def invalid_tweets(tweets: pd.DataFrame) -> pd.DataFrame:
-    tweets = tweets.loc[tweets['content'].apply(len) > 15, ['tweet_id']]
-
-    return tweets
+    return tweets.loc[tweets['content'].apply(len) > 15, ['tweet_id']]
